@@ -10,6 +10,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const showdown = require('showdown');
 const converter = new showdown.Converter();
+converter.setFlavor('github');
 
 const cwd = process.cwd();
 let config = {
