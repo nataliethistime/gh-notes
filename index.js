@@ -35,6 +35,8 @@ const notesDir = path.join(cwd, config.notesFolder);
 
 const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
 const formatNoteTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
+const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, but good enough
+const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 //
 // Putting items into the Express 'locals' store makes them available in all Handlebars templates
@@ -75,6 +77,8 @@ app.get('/:fName', (req, res) => {
   }
 
   const content = fs.readFileSync(p).toString('utf8');
+  const words = countWords(content);
+
   remark()
     .use(remarkHtml)
     .use(remarkToc)
@@ -82,6 +86,8 @@ app.get('/:fName', (req, res) => {
     .process(content, (err, file) => {
       if (err) throw err;
       return res.render('note', {
+        pageTitle: formatNoteTitle(fName),
+        pageSubtitle: `${commify(words)} word${words.length === 1 ? '' : 's'}`,
         noteHtml: String(file),
       });
     });
