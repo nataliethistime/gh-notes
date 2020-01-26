@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 const express = require('express');
@@ -21,9 +23,6 @@ try {
 } catch (e) {
   console.log('Could not load user configuration, using defaults instead.');
   console.log('To configure gh-notes, create a gh-notes.config.json file.');
-  if (process.env.NODE_ENV !== 'production') {
-    console.error(e);
-  }
 }
 
 const notesDir = path.join(cwd, config.notesFolder);
