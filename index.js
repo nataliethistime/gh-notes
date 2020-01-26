@@ -8,9 +8,10 @@ const basicAuth = require('express-basic-auth');
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
-const showdown = require('showdown');
-const converter = new showdown.Converter();
-converter.setFlavor('github');
+const remark = require('remark');
+const remarkHtml = require('remark-html');
+const remarkToc = require('remark-toc');
+const remarkExternalLinks = require('remark-external-links');
 
 const cwd = process.cwd();
 let config = {
@@ -74,9 +75,16 @@ app.get('/:fName', (req, res) => {
   }
 
   const content = fs.readFileSync(p).toString('utf8');
-  res.render('note', {
-    noteHtml: converter.makeHtml(content),
-  });
+  remark()
+    .use(remarkHtml)
+    .use(remarkToc)
+    .use(remarkExternalLinks, { target: '_blank', rel: ['noopener', 'noreferer'] })
+    .process(content, (err, file) => {
+      if (err) throw err;
+      return res.render('note', {
+        noteHtml: String(file),
+      });
+    });
 });
 
 app.listen(port, () => {

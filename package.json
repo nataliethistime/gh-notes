@@ -25,6 +25,10 @@
     "express-basic-auth": "^1.2.0",
     "express-handlebars": "^3.1.0",
     "lodash": "^4.17.15",
+    "remark": "^11.0.2",
+    "remark-external-links": "^5.0.0",
+    "remark-html": "^10.0.0",
+    "remark-toc": "^7.0.0",
     "showdown": "^1.9.1"
   },
   "devDependencies": {
