@@ -3,6 +3,7 @@
 'use strict';
 
 const express = require('express');
+const handlebars = require('express-handlebars');
 const basicAuth = require('express-basic-auth');
 const path = require('path');
 const fs = require('fs');
@@ -25,15 +26,18 @@ try {
   console.log('To configure gh-notes, create a gh-notes.config.json file.');
 }
 
-const notesDir = path.join(cwd, config.notesFolder);
-
 const app = express();
 const port = process.env.PORT || 5000;
+const notesDir = path.join(cwd, config.notesFolder);
 
-const cap = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
-const clean = (fName) => cap(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
+const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
+const formatNoteName = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
 
-const backLink = `<a href="/">Go Back</a><br />`;
+app.engine('handlebars', handlebars({
+  helpers: { titleCase, formatNoteName },
+}));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(basicAuth({
   users: {
@@ -45,15 +49,7 @@ app.use(basicAuth({
 
 app.get('/', (req, res) => {
   const files = fs.readdirSync(notesDir);
-  res.send(
-    '<ul>' +
-    _.chain(files)
-      .sort()
-      .map((fName) => `<li><a href="/${fName}">${clean(fName)}</a></li>`)
-      .join('')
-      .value() +
-    '</ul>'
-  );
+  return res.render('index', { files });
 });
 
 app.get('/:fName', (req, res) => {
@@ -61,11 +57,13 @@ app.get('/:fName', (req, res) => {
   const p = path.join(notesDir, fName);
 
   if (!fName || !fs.existsSync(p)) {
-    return res.send(backLink + 'Not Found');
+    return res.render('404');
   }
 
   const content = fs.readFileSync(p).toString('utf8');
-  res.send(backLink + converter.makeHtml(content));
+  res.render('note', {
+    noteHtml: converter.makeHtml(content),
+  });
 });
 
 app.listen(port, () => {
