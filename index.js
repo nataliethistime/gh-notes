@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
   const length = app.locals.files.length;
   return res.render('index', {
     pageTitle: config.siteName,
-    pageSubtitle: `Showing ${length} note${length === 1 ? '' : 's'}`,
+    pageSubtitle: `${length} note${length === 1 ? '' : 's'}`,
   });
 });
 
