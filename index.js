@@ -16,6 +16,7 @@ let config = {
   username: 'gh-notes',
   password: 'password',
   notesFolder: 'notes',
+  siteName: 'GH Notes',
 };
 
 try {
@@ -31,10 +32,16 @@ const port = process.env.PORT || 5000;
 const notesDir = path.join(cwd, config.notesFolder);
 
 const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
-const formatNoteName = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
+const formatNoteTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
+
+//
+// Putting items into the Express 'locals' store makes them available in all Handlebars templates
+//
+app.locals.config = config;
+app.locals.files = fs.readdirSync(notesDir);
 
 app.engine('handlebars', handlebars({
-  helpers: { titleCase, formatNoteName },
+  helpers: { titleCase, formatNoteTitle },
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
@@ -47,9 +54,14 @@ app.use(basicAuth({
   realm: 'Application',
 }));
 
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  const files = fs.readdirSync(notesDir);
-  return res.render('index', { files });
+  const length = app.locals.files.length;
+  return res.render('index', {
+    pageTitle: config.siteName,
+    pageSubtitle: `Showing ${length} note${length === 1 ? '' : 's'}`,
+  });
 });
 
 app.get('/:fName', (req, res) => {
