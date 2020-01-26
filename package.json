@@ -1,0 +1,20 @@
+{
+  "name": "gh-notes",
+  "version": "0.0.1",
+  "description": "Minimal note-taking using Github, Markdown and Node.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1vasari/gh-notes.git"
+  },
+  "author": "Nathan McCallum <nathan@1vas.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1vasari/gh-notes/issues",
+    "email": "nathan@1vas.me"
+  },
+  "homepage": "https://github.com/1vasari/gh-notes#readme",
+  "bin": {
+    "gh-notes": "./index.js"
+  }
+}
