@@ -1,6 +1,6 @@
 {
   "name": "gh-notes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Minimal note-taking using Github, Markdown and Node.js",
   "main": "index.js",
   "repository": {
