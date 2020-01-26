@@ -16,5 +16,17 @@
   "homepage": "https://github.com/1vasari/gh-notes#readme",
   "bin": {
     "gh-notes": "./index.js"
+  },
+  "scripts": {
+    "dev": "cd test && nodemon ../index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "lodash": "^4.17.15",
+    "showdown": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
