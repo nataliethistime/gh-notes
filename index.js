@@ -19,6 +19,7 @@ let config = {
   password: 'password',
   notesFolder: 'notes',
   siteName: 'GH Notes',
+  githubNotesLink: 'https://github.com/1vasari/gh-notes/tree/master/test/notes',
 };
 
 try {
@@ -89,6 +90,7 @@ app.get('/:fName', (req, res) => {
         pageTitle: formatNoteTitle(fName),
         pageSubtitle: `${commify(words)} word${words.length === 1 ? '' : 's'}`,
         noteHtml: String(file),
+        fName,
       });
     });
 });
