@@ -12,6 +12,7 @@ const remark = require('remark');
 const remarkHtml = require('remark-html');
 const remarkToc = require('remark-toc');
 const remarkExternalLinks = require('remark-external-links');
+const remarkSlug = require('remark-slug');
 
 const cwd = process.cwd();
 let config = {
@@ -83,6 +84,7 @@ app.get('/:fName', (req, res) => {
   remark()
     .use(remarkHtml)
     .use(remarkToc)
+    .use(remarkSlug)
     .use(remarkExternalLinks, { target: '_blank', rel: ['noopener', 'noreferer'] })
     .process(content, (err, file) => {
       if (err) throw err;
