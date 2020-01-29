@@ -1,0 +1,13 @@
+<ul>
+  {{#each @this}}
+    <li>
+      {{#isEqual type 'file'}}<a href="{{location}}">{{/isEqual}}
+        {{title}}
+      {{#isEqual type 'file'}}</a>{{/isEqual}}
+    </li>
+    {{#isEqual type 'directory'}}
+      {{> directory files}}
+    {{/isEqual}}
+  {{/each}}
+</ul>
+

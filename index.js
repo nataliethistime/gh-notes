@@ -33,21 +33,53 @@ try {
 
 const app = express();
 const port = process.env.PORT || 5000;
-const notesDir = path.join(cwd, config.notesFolder);
+const notesFolder = path.join(cwd, config.notesFolder);
 
 const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
-const formatNoteTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
+const formatTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
 const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, but good enough
 const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const isEqual = function (arg1, arg2, options) {return (arg1 == arg2) ? options.fn(this) : options.inverse(this)};
+
+const crawl = (location = '') => {
+  const list = fs.readdirSync(path.join(notesFolder, location)).sort();
+  const files  = [];
+  const directories = [];
+
+  for (const item of list) {
+    const newLocation = `${location}${path.sep}${item}`;
+
+    if (item.match(/\.md$/)) {
+      files.push({
+        type: 'file',
+        location: newLocation,
+        title: formatTitle(item),
+      });
+      continue;
+    }
+
+    const stats = fs.lstatSync(path.join(notesFolder, newLocation));
+    if (stats.isDirectory()) {
+      directories.push({
+        type: 'directory',
+        location: newLocation,
+        title: formatTitle(item),
+        files: crawl(newLocation)
+      });
+    }
+  }
+
+  return [ ...directories, ...files ];
+};
 
 //
 // Putting items into the Express 'locals' store makes them available in all Handlebars templates
 //
 app.locals.config = config;
-app.locals.files = fs.readdirSync(notesDir);
+app.locals.files = crawl();
 
 app.engine('handlebars', handlebars({
-  helpers: { titleCase, formatNoteTitle },
+  helpers: { isEqual },
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
@@ -70,12 +102,17 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/:fName', (req, res) => {
-  const fName = req.params.fName;
-  const p = path.join(notesDir, fName);
+app.get('/*', (req, res) => {
+  const fName = _.last(String(req.path).split(path.sep));
+  const p = path.join(notesFolder, req.path);
 
-  if (!fName || !fs.existsSync(p)) {
+  if (!fs.existsSync(p)) {
     return res.render('404');
+  }
+
+  const stats = fs.lstatSync(p);
+  if (stats.isDirectory()) {
+    res.redirect('/');
   }
 
   const content = fs.readFileSync(p).toString('utf8');
@@ -89,7 +126,7 @@ app.get('/:fName', (req, res) => {
     .process(content, (err, file) => {
       if (err) throw err;
       return res.render('note', {
-        pageTitle: formatNoteTitle(fName),
+        pageTitle: formatTitle(fName),
         pageSubtitle: `${commify(words)} word${words.length === 1 ? '' : 's'}`,
         noteHtml: String(file),
         fName,

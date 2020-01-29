@@ -37,11 +37,13 @@
           <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="/" class="pure-menu-link menu-item-divided">Home</a></li>
             {{#each files}}
-              <li class="pure-menu-item">
-                <a href="/{{@this}}" class="pure-menu-link">
-                  {{formatNoteTitle @this}}
-                </a>
-              </li>
+              {{#isEqual type 'file'}}
+                <li class="pure-menu-item">
+                  <a href="{{location}}" class="pure-menu-link">
+                    {{title}}
+                  </a>
+                </li>
+              {{/isEqual}}
             {{/each}}
           </ul>
         </div>
