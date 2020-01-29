@@ -1,18 +1,22 @@
-# gh-notes
+# GH Notes
 
 Minimal note-taking using Github, Markdown and Node.js
 
 # Features
 
+- Infinitely nestable notes via folders
+- GitHub flavoured markdown
 - Fast & pretty site
 - Link notes to each other
+- Opt-in generated table of contents
+- Responsive layout
 - "View in GitHub" link
+- Permissive license for community hacking
 
 # Future Goals
 
-1. Infinitely nestable notes via folders
-2. Fuzzy search
-3. Improved authentication
+- Fuzzy search
+- Improved authentication
 
 # License
 
