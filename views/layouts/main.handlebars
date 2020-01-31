@@ -19,8 +19,17 @@
       crossorigin="anonymous"
     >
     <link rel="stylesheet" href="https://unpkg.com/highlight.js@9.18.0/styles/default.css">
-    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
+
+    {{#if config.font}}
+      <link href="https://fonts.googleapis.com/css?family={{config.font}}&display=swap" rel="stylesheet">
+      <style type="text/css">
+        body {
+          font-family: '{{config.font}}', sans-serif;
+        }
+      </style>
+    {{/if}}
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script type="text/javascript" src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>

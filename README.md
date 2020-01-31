@@ -11,6 +11,7 @@ Minimal note-taking using Github, Markdown and Node.js
 - Opt-in generated table of contents
 - Responsive layout
 - "View in GitHub" link
+- Use any font from Google Fonts
 - Permissive license for community hacking
 
 # Future Goals
