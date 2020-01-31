@@ -1,8 +1,14 @@
-{{{noteHtml}}}
+<div class="header">
+  <h1>{{formatTitle fName}}</h1>
+  <h2>{{pageSubtitle}}</h2>
+</div>
 
-{{#if config.githubNotesLink}}
-  <hr />
-  <a href="{{config.githubNotesLink}}/{{fName}}" target="_blank" rel="noopener noreferer">
-    View in GitHub
-  </a>
-{{/if}}
+<div class="content">
+  {{{noteHtml}}}
+  {{#if config.githubNotesLink}}
+    <hr />
+    <a href="{{config.githubNotesLink}}/{{fName}}" target="_blank" rel="noopener noreferer">
+      View in GitHub
+    </a>
+  {{/if}}
+</div>

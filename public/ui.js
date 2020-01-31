@@ -42,3 +42,8 @@
     }
   };
 }(this, this.document));
+
+$(() => {
+  console.log('Initializing pjax');
+  $(document).pjax('a', '#main');
+});

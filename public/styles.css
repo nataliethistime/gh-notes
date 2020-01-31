@@ -262,3 +262,9 @@ a:hover {
   text-transform: none;
   background-color: grey;
 }
+
+code {
+  border-radius: 1em;
+  background: #F0F0F0;
+  padding: 0.5em;
+}

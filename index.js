@@ -40,6 +40,7 @@ const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
 const formatTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
 const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, but good enough
 const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const pluralise = (n, singularForm, pluralForm) => `${n} ${parseInt(n) === 1 ? singularForm : pluralForm}`;
 const isEqual = function (arg1, arg2, options) {return (arg1 == arg2) ? options.fn(this) : options.inverse(this)};
 
 const crawl = (location = '') => {
@@ -80,7 +81,7 @@ app.locals.config = config;
 app.locals.files = crawl();
 
 app.engine('handlebars', handlebars({
-  helpers: { isEqual },
+  helpers: { isEqual, formatTitle, pluralise },
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
@@ -96,10 +97,10 @@ app.use(basicAuth({
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  const length = app.locals.files.length;
   return res.render('index', {
-    pageTitle: config.siteName,
-    pageSubtitle: `${length} note${length === 1 ? '' : 's'}`,
+    siteName: config.siteName,
+    notesQuantity: app.locals.files.length,
+    layout: !!req.get('X-PJAX') ? false : 'main',
   });
 });
 
@@ -128,7 +129,7 @@ app.get('/*', (req, res) => {
     .process(content, (err, file) => {
       if (err) throw err;
       return res.render('note', {
-        pageTitle: formatTitle(fName),
+        layout: !!req.get('X-PJAX') ? false : 'main',
         pageSubtitle: `${commify(words)} word${words.length === 1 ? '' : 's'}`,
         noteHtml: String(file),
         fName,
