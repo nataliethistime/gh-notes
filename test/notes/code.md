@@ -1,7 +1,10 @@
-#!/usr/bin/env node
+# Common Git Commands
 
-'use strict';
+- Stage all the files: `git add -A`
+- Commit them `git commit -am "Your commit message here"`
 
+# Some JavaScript code
+```javascript
 const express = require('express');
 const handlebars = require('express-handlebars');
 const basicAuth = require('express-basic-auth');
@@ -13,7 +16,6 @@ const remarkHtml = require('remark-html');
 const remarkToc = require('remark-toc');
 const remarkExternalLinks = require('remark-external-links');
 const remarkSlug = require('remark-slug');
-const remarkHighlight = require('remark-highlight.js');
 
 const cwd = process.cwd();
 let config = {
@@ -124,7 +126,6 @@ app.get('/*', (req, res) => {
     .use(remarkToc)
     .use(remarkSlug)
     .use(remarkExternalLinks, { target: '_blank', rel: ['noopener', 'noreferer'] })
-    .use(remarkHighlight)
     .process(content, (err, file) => {
       if (err) throw err;
       return res.render('note', {
@@ -139,3 +140,4 @@ app.get('/*', (req, res) => {
 app.listen(port, () => {
   console.log('Notes app started at port: ' + port);
 });
+```
