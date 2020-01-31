@@ -2,4 +2,5 @@
   "username": "test",
   "password": "1234qwer",
   "notesFolder": "notes",
+  "githubNotesLink": "https://github.com/1vasari/gh-notes/tree/master/test/notes"
 }

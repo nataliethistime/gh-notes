@@ -21,7 +21,7 @@ let config = {
   password: 'password',
   notesFolder: 'notes',
   siteName: 'GH Notes',
-  githubNotesLink: 'https://github.com/1vasari/gh-notes/tree/master/test/notes',
+  githubNotesLink: '',
   font: '',
 };
 
