@@ -133,6 +133,7 @@ app.get('/*', (req, res) => {
         layout: !!req.get('X-PJAX') ? false : 'main',
         pageSubtitle: `${commify(words)} word${words.length === 1 ? '' : 's'}`,
         noteHtml: String(file),
+        noteLocation: req.path,
         fName,
       });
     });
