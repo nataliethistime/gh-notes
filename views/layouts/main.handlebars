@@ -30,6 +30,38 @@
       </style>
     {{/if}}
 
+    {{#if config.darkModeToggle}}
+      <style type="text/css" id="dark-mode-styles" media="not all">
+        body {
+          background-color: #383333;
+        }
+        .header {
+          border-bottom-color: grey;
+        }
+        .header h1 {
+          color: grey;
+        }
+        .header h2 {
+          color: white;
+        }
+        hr {
+          border-color: grey;
+        }
+        .content, .header h2, li, code {
+          color: #eaeaea;
+        }
+        a, a:visited {
+          color: orange;
+        }
+        code {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+        code.hljs {
+          background-color: rgba(256, 256, 256, 0.8);
+        }
+      </style>
+    {{/if}}
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script type="text/javascript" src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
