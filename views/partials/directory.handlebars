@@ -1,6 +1,6 @@
-<ul>
+<ul class="tree">
   {{#each @this}}
-    <li style="list-style: square;">
+    <li>
       {{#isEqual type 'file'}}<a href="{{location}}">{{/isEqual}}
         {{title}}
       {{#isEqual type 'file'}}</a>{{/isEqual}}

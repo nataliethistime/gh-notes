@@ -273,7 +273,38 @@ body, code {
   transition: background-color 1s ease;
 }
 
-/* Not sure about this, it looks somewhat strange */
-/* a, a:visited, .content, .header h2, li, code {
-  transition: color 1s ease;
-} */
+ul { margin-left: 1em !important; }
+ul ul { margin-left: 2em !important; }
+ul ul ul { margin-left: 3em !important; }
+ul ul ul ul { margin-left: 4em !important; }
+ul ul ul ul ul { margin-left: 5em !important; }
+ul ul ul ul ul ul { margin-left: 6em !important; }
+ul ul ul ul ul ul ul { margin-left: 7em !important; }
+ul ul ul ul ul ul ul ul { margin-left: 8em !important; }
+ul ul ul ul ul ul ul ul ul { margin-left: 9em !important; }
+ul ul ul ul ul ul ul ul ul ul { margin-left: 10em !important; }
+
+.tree, .tree ul {
+  margin-top: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid;
+}
+
+.tree li {
+  padding-left: 15px;
+  line-height: 2em;
+  position: relative;
+}
+
+.tree li:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 10px;
+  border-bottom: 1px solid;
+  margin-bottom: -1px;
+  height: 0;
+  left: 0;
+  top: 1em;
+}
