@@ -6,7 +6,6 @@ $(function () {
   const $menuLink = $('#menuLink');
   const $content = $('#main');
 
-    var active = 'active';
   const toggleAll = (e) => {
     e.preventDefault();
     $layout.toggleClass(CLASS);
