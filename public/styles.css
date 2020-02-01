@@ -267,16 +267,16 @@ body, code {
   transition: background-color 1s ease;
 }
 
-ul { margin-left: 1em !important; }
-ul ul { margin-left: 2em !important; }
-ul ul ul { margin-left: 3em !important; }
-ul ul ul ul { margin-left: 4em !important; }
-ul ul ul ul ul { margin-left: 5em !important; }
-ul ul ul ul ul ul { margin-left: 6em !important; }
-ul ul ul ul ul ul ul { margin-left: 7em !important; }
-ul ul ul ul ul ul ul ul { margin-left: 8em !important; }
-ul ul ul ul ul ul ul ul ul { margin-left: 9em !important; }
-ul ul ul ul ul ul ul ul ul ul { margin-left: 10em !important; }
+ul.tree { margin-left: 1em !important; }
+ul.tree ul { margin-left: 2em !important; }
+ul.tree ul ul { margin-left: 3em !important; }
+ul.tree ul ul ul { margin-left: 4em !important; }
+ul.tree ul ul ul ul { margin-left: 5em !important; }
+ul.tree ul ul ul ul ul { margin-left: 6em !important; }
+ul.tree ul ul ul ul ul ul { margin-left: 7em !important; }
+ul.tree ul ul ul ul ul ul ul { margin-left: 8em !important; }
+ul.tree ul ul ul ul ul ul ul ul { margin-left: 9em !important; }
+ul.tree ul ul ul ul ul ul ul ul ul { margin-left: 10em !important; }
 
 .tree, .tree ul {
   margin-top: 0;
