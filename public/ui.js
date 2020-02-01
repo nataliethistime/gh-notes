@@ -14,7 +14,6 @@ $(function () {
   };
 
   const ensureClosed = (e) => {
-    e.preventDefault();
     $layout.removeClass(CLASS);
     $menu.removeClass(CLASS);
     $menuLink.removeClass(CLASS);
