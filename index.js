@@ -44,6 +44,7 @@ const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, b
 const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const pluralise = (n, singularForm, pluralForm) => `${n} ${parseInt(n) === 1 ? singularForm : pluralForm}`;
 const isEqual = function (arg1, arg2, options) {return (arg1 == arg2) ? options.fn(this) : options.inverse(this)};
+const formatLocation = (loc) => _.chain(loc.split(path.sep)).filter().map(formatTitle).join(' > ').value();
 
 const crawl = (location = '') => {
   const list = fs.readdirSync(path.join(notesFolder, location)).sort();
@@ -83,7 +84,7 @@ app.locals.config = config;
 app.locals.files = crawl();
 
 app.engine('handlebars', handlebars({
-  helpers: { isEqual, formatTitle, pluralise },
+  helpers: { isEqual, formatTitle, pluralise, formatLocation },
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
