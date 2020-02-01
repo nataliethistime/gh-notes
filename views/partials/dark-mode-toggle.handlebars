@@ -1,21 +1,27 @@
 {{#if config.darkModeToggle}}
   <div style="float: right;">
-    <a href="#" id="dark-mode-toggle">(toggle dark mode)</a>
+    <a href="#" id="dark-mode-toggle">(dark mode)</a>
   </div>
 
   <script type="text/javascript">
     $(() => {
       const $styles = $('#dark-mode-styles');
-      $('#dark-mode-toggle').click(() => {
-        const isDarkMode = $styles.attr('media') !== 'not all';
-        const newState = !isDarkMode;
+      const $toggle = $('#dark-mode-toggle');
+
+      const $set = (newState) => {
         window.localStorage.setItem('darkmode', newState);
         $styles.attr('media', newState ? '' : 'not all');
+        $toggle.html(newState ? '(light mode)' : '(dark mode)');
+      };
+
+      $('#dark-mode-toggle').click(() => {
+        const isDarkMode = $styles.attr('media') !== 'not all';
+        $set(!isDarkMode);
       });
 
       const initialState = window.localStorage.getItem('darkmode') === 'true';
       if (typeof initialState === 'boolean') {
-        $styles.attr('media', initialState ? '' : 'not all');
+        $set(initialState);
       }
     });
   </script>
