@@ -268,3 +268,12 @@ code {
   background: #F0F0F0;
   padding: 0.5em;
 }
+
+body, code {
+  transition: background-color 1s ease;
+}
+
+/* Not sure about this, it looks somewhat strange */
+/* a, a:visited, .content, .header h2, li, code {
+  transition: color 1s ease;
+} */
