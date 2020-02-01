@@ -25,5 +25,5 @@ $(function () {
 
   console.log('Initializing pjax');
   $(document).pjax('a', '#main');
-  $('#main').on('pjax:success', ensureClosed(e));
+  $('#main').on('pjax:success', ensureClosed);
 });
