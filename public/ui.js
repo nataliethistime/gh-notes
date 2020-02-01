@@ -1,49 +1,30 @@
-(function (window, document) {
+$(function () {
+  const CLASS = 'active';
 
-  var layout   = document.getElementById('layout');
-  var menu     = document.getElementById('menu');
-  var menuLink = document.getElementById('menuLink');
-  var content  = document.getElementById('main');
+  const $layout = $('#layout');
+  const $menu = $('#menu');
+  const $menuLink = $('#menuLink');
+  const $content = $('#main');
 
-  function toggleClass(element, className) {
-    var classes = element.className.split(/\s+/);
-    var length = classes.length;
-
-    for (var i = 0; i < length; i++) {
-      if (classes[i] === className) {
-        classes.splice(i, 1);
-        break;
-      }
-    }
-
-    // The className is not found
-    if (length === classes.length) {
-      classes.push(className);
-    }
-
-    element.className = classes.join(' ');
-  }
-
-  function toggleAll(e) {
     var active = 'active';
+  const toggleAll = (e) => {
     e.preventDefault();
-    toggleClass(layout, active);
-    toggleClass(menu, active);
-    toggleClass(menuLink, active);
-  }
-
-  menuLink.onclick = function (e) {
-    toggleAll(e);
+    $layout.toggleClass(CLASS);
+    $menu.toggleClass(CLASS);
+    $menuLink.toggleClass(CLASS);
   };
 
-  content.onclick = function(e) {
-    if (menu.className.indexOf('active') !== -1) {
-      toggleAll(e);
-    }
+  const ensureClosed = (e) => {
+    e.preventDefault();
+    $layout.removeClass(CLASS);
+    $menu.removeClass(CLASS);
+    $menuLink.removeClass(CLASS);
   };
-}(this, this.document));
 
-$(() => {
+  $menuLink.click(toggleAll);
+  $content.click(ensureClosed);
+
   console.log('Initializing pjax');
   $(document).pjax('a', '#main');
+  $('#main').on('pjax:success', ensureClosed(e));
 });
