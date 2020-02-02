@@ -18,7 +18,8 @@
     "gh-notes": "./index.js"
   },
   "scripts": {
-    "dev": "cd test && nodemon ../index.js"
+    "dev": "cd test && nodemon ../index.js",
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
