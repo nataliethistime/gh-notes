@@ -38,7 +38,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const notesFolder = path.join(cwd, config.notesFolder);
 
-const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ');
+const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ').value();
 const formatTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
 const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, but good enough
 const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
