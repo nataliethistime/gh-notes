@@ -79,7 +79,8 @@
           <a class="pure-menu-heading" href="#">{{config.siteName}}</a>
 
           <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="/" class="pure-menu-link menu-item-divided">Home</a></li>
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link menu-item">Home</a></li>
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link menu-item-divided">Search</a></li>
             {{#each files}}
               {{#isEqual type 'file'}}
                 <li class="pure-menu-item">
