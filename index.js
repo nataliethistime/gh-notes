@@ -5,20 +5,15 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const basicAuth = require('express-basic-auth');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
-
 const remark = require('remark');
 const remarkHtml = require('remark-html');
 const remarkToc = require('remark-toc');
 const remarkExternalLinks = require('remark-external-links');
 const remarkSlug = require('remark-slug');
 const remarkHighlight = require('remark-highlight.js');
-
-const Fuse = require('fuse.js');
 
 const cwd = process.cwd();
 let config = {
@@ -43,9 +38,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 const notesFolder = path.join(cwd, config.notesFolder);
 
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-
 const titleCase = (str) => _.chain(str).split(' ').map(_.capitalize).join(' ').value();
 const formatTitle = (fName) => titleCase(fName.replace(/-/g, ' ').replace(/\.md$/, ''));
 const countWords = (str) => str.trim().split(/\s+/).length; // a little dirty, but good enough
@@ -53,11 +45,6 @@ const commify = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const pluralise = (n, singularForm, pluralForm) => `${n} ${parseInt(n) === 1 ? singularForm : pluralForm}`;
 const isEqual = function (arg1, arg2, options) {return (arg1 == arg2) ? options.fn(this) : options.inverse(this)};
 const formatLocation = (loc) => _.chain(loc.split(path.sep)).filter().map(formatTitle).join(' > ').value();
-
-//
-// For search:
-//
-const allNotes = [];
 
 const crawl = (location = '') => {
   const list = fs.readdirSync(path.join(notesFolder, location)).sort();
@@ -68,17 +55,10 @@ const crawl = (location = '') => {
     const newLocation = `${location}${path.sep}${item}`;
 
     if (item.match(/\.md$/)) {
-      const title = formatTitle(item);
-      const content = fs.readFileSync(path.join(notesFolder, newLocation)).toString('utf8');
       files.push({
         type: 'file',
         location: newLocation,
-        title,
-      });
-      allNotes.push({
-        location: newLocation,
-        title,
-        content,
+        title: formatTitle(item),
       });
       continue;
     }
@@ -125,26 +105,6 @@ app.get('/', (req, res) => {
     notesQuantity: app.locals.files.length,
     layout: !!req.get('X-PJAX') ? false : 'main',
   });
-});
-
-//
-// TODO - tweak this, search results are pretty sketchy still
-//
-const fuse = new Fuse(allNotes, {
-  keys: [
-    'title',
-    'content',
-  ],
-});
-
-app.get('/search', (req, res) => {
-  res.render('search');
-});
-
-app.post('/search', (req, res) => {
-  const q = req.body.query;
-  const results = fuse.search(q);
-  res.json({ results });
 });
 
 app.get('/*', (req, res) => {
