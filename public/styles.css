@@ -46,7 +46,7 @@ The content `<div>` is where all your content goes.
 
 .header {
   margin: 0;
-  color: #333;
+  color: #B3B3B3;
   text-align: center;
   padding: 2.5em 2em 0;
   border-bottom: 1px solid #eee;
@@ -240,7 +240,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
  */
 
 a, a:visited {
-  color: rgb(0, 0, 238);
+  color: #DC965A;
   text-decoration: none;
 }
 
@@ -261,10 +261,6 @@ code {
   border-radius: 1em;
   background: #F0F0F0;
   padding: 0.5em;
-}
-
-body, code {
-  transition: background-color 1s ease;
 }
 
 ul.tree { margin-left: 1em !important; }
@@ -301,4 +297,33 @@ ul.tree ul ul ul ul ul ul ul ul ul { margin-left: 10em !important; }
   height: 0;
   left: 0;
   top: 1em;
+}
+
+body {
+  background-color: #242325;
+}
+
+.header {
+  border-bottom-color: #B3B3B3;
+}
+k
+.header h1 {
+  color: #B3B3B3;
+}
+k
+hr {
+  border-color: #B3B3B3;
+}
+
+.content, .header h2, li, code {
+  color: #C8C8C8;
+}
+
+code {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #BBB891;
+}
+
+code.hljs {
+  background-color: rgba(256, 256, 256, 0.8);
 }

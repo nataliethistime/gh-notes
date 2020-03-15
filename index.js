@@ -23,7 +23,6 @@ let config = {
   siteName: 'GH Notes',
   githubNotesLink: '',
   font: '',
-  darkModeToggle: true,
 };
 
 try {
